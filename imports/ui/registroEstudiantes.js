@@ -1,7 +1,10 @@
 import { Template } from 'meteor/templating';
 import { Users } from '../api/collections.js';
+import { Libros } from '../api/collections.js';
+
+import { ReactiveDict } from 'meteor/reactive-dict';
  
-import './registroEstudiante.html';
+import './registroEstudiantes.html';
 
 
  Template.registroEstudiantes.helpers({

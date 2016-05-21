@@ -6,7 +6,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './actualizar.html';
 
-Template.templateD.helpers({
+Template.actualizar.helpers({
 
        updateEstudiante: function () {
         return Session.get('update');
@@ -15,7 +15,7 @@ Template.templateD.helpers({
         return Session.get('update2');
     }
     });
-Template.templateD.events({
+Template.actualizar.events({
 
         'click .updateLibro': function(event, template){
             event.preventDefault();
