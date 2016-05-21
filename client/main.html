@@ -1,25 +1,30 @@
 <head>
-  <title>simple</title>
+  <title>BIBLIOTECA</title>
+  
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
-  {{> info}}
+  <!-- {{> navbar}} -->
+  <h1>BIBLIOTECA</h1>
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 block-a">
+          {{>registroEstudiantes}}    
+        </div>        
+        <div class="col-xs-6 col-sm-6 col-md-6 block-b">  
+        {{>registroLibros}}      
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 block-c">
+          {{>listar}}      
+        </div>
+        
+        <div class="col-xs-6 col-sm-6 col-md-6 block-d">  
+        {{>actualizar}}      
+        </div>
+    </div>
+  </div>
+  
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com">Discussions</a></li>
-  </ul>
-</template>

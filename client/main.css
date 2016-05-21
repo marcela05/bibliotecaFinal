@@ -1,1 +1,28 @@
 /* CSS declarations go here */
+
+.block-a{
+	background:#e1e1e8;
+	padding: 20px;
+	height: 350px;
+	border: 2px solid black;
+}
+
+.block-b{
+	background:#7aec06;
+	padding: 20px;
+	height: 350px;
+	overflow:scroll;
+}
+
+.block-c{
+	background:yellow;
+	padding: 20px;
+	height: 270px;
+	border: 1px solid black
+}
+.block-d{
+	background:blue;
+	padding: 20px;
+	height: 270px;
+	border: 1px solid black
+}
