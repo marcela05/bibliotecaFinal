@@ -6,7 +6,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './registroLibros.html';
   
-  Template.templateB.helpers({
+  Template.registroLibros.helpers({
     users: function () {
         return Users.find().fetch();
     },
@@ -21,7 +21,7 @@ import './registroLibros.html';
     },
   });
 
-    Template.templateB.events({
+    Template.registroLibros.events({
     'click .delete': function (){
         Users.remove(this._id);
         Libros.remove(this._id)
