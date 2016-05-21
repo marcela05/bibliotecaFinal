@@ -2,8 +2,6 @@ import { Template } from 'meteor/templating';
 import { Users } from '../api/collections.js';
 import { Libros } from '../api/collections.js';
 
-import { ReactiveDict } from 'meteor/reactive-dict';
-
 import './actualizar.html';
 
 Template.actualizar.helpers({
@@ -14,7 +12,7 @@ Template.actualizar.helpers({
         updateLibro: function () {
         return Session.get('update2');
     }
-    });
+ });
 Template.actualizar.events({
 
         'click .updateLibro': function(event, template){

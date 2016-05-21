@@ -5,5 +5,3 @@ import { Meteor } from 'meteor/meteor';
 export const Users = new Mongo.Collection('users');
 export const Libros = new Mongo.Collection('libros');
 
-
-}

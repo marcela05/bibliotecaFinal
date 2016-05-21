@@ -1,12 +1,8 @@
 import { Template } from 'meteor/templating';
-import { Users } from '../api/collections.js';
 import { Libros } from '../api/collections.js';
-
-import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './listar.html';
   
-
    Template.listar.helpers({
     userNombre2: function(){
         return Session.get('nombre2');
