@@ -1,48 +1,59 @@
 import { Template } from 'meteor/templating';
+import { Users } from '../api/collections.js';
 import { Libros } from '../api/collections.js';
 
 import './listar.html';
-  
-   Template.listar.helpers({
-    userNombre2: function(){
-        return Session.get('nombre2');
-    },
+import './registroLibros.js';
+import './registroEstudiantes.js';
 
-    userEdad: function(){
-        return Session.get('edad');
+  Template.listar.helpers({
+    users: function () {
+        return Users.find().fetch();
     },
-
-    userCodigo: function(){
-        return Session.get('codigo');
-    }
+    libros: function () {
+        return Libros.find().fetch();
+    },
+    userListarLibros: function () {
+        return Session.get('listarLibro');
+    },
+    userListarEstudiantes: function () {
+        return Session.get('listarEstudiante');
+    },
   });
 
  Template.listar.events({
-
-    'submit #form-c': function(event, template){
-        event.preventDefault();         
-        var name = event.target.name.value;
-        var edad = event.target.edad.value;
-        var codigo = event.target.codigo.value;
-        Session.set('nombre2', name);
-        Session.set('edad', edad);
-        Session.set('codigo', codigo);
-            
-            var libro = {
-                name: name,
-                edad: edad,
-                codigo: codigo,
-            };
-        var libroId = Session.get('update');
-            if (libroId != undefined){
-                Libros.update({_id: libroId}, libro);
-            } else {
-                Libros.insert(libro);
-                console.log("Este es el libro: ", libro);
-
-            }
-        console.log("Este es el estudiante: ", libro);
-            event.target.name.value = '';
-            event.target.edad.value = '';
+    'click .delete': function (){
+        Users.remove(this._id);
+        Libros.remove(this._id)
     },
-    });
+
+    'click .user': function (){
+        console.log("User: ", this);
+        Session.set('nombre', this.name);
+        Session.set('ano', this.ano);
+        Session.set('autor', this.autor);
+        Session.set('lsbn', this.lsbn);
+        Session.set('estado', this.estado);
+        Session.set('update', this._id);
+    },
+    'click .libro': function (){
+        console.log("Libro: ", this);
+        Session.set('nombre2', this.name);
+        Session.set('edad', this.edad);
+        Session.set('codigo', this.codigo);
+        Session.set('update2', this._id);
+    },
+    'click .listarLibro': function(event, template){
+        event.preventDefault();
+            Session.set('listarLibro', true);
+            Session.set('listarEstudiante', false);
+            console.log("submit lib bbbbbbb: ", Session.get('listarLibro'));
+    },
+    'click .listarEstudiante': function(event, template){
+        event.preventDefault();
+       Session.set('listarLibro', false);
+        Session.set('listarEstudiante', true);
+        console.log("submit est bbbbbbb: ", 2);
+    },
+
+  });

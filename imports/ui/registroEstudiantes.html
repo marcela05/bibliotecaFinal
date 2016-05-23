@@ -1,62 +1,32 @@
 <template name="registroEstudiantes">
-  <form id="form-b" name ="formb" class="form-horizontal">
-   <input type="submit" value="Listar-Estudiantes" class= "listarLibro" id="listarLibro" name="listarLibro"/>
-   <input type="submit" value="Listar-Libros" class= "listarEstudiante" id="listarEstudiante" name="listarEstudiante"/>       
-        {{#if  userListarEstudiantes}}
-            {{#each users}} 
-      <div class="user">
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Nombre</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{name}}</div>
+	
+	<form id="form-c" name ="formC" class="form-horizontal">
+      <div class="form-group ">
+          <label for="search" class="col-sm-4 control-label">REGISTRO ESTUDIANTE</label>
       </div>
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Año</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{ano}}</div>
+      <div class="form-group ">
+          <label for="search" class="col-sm-2 control-label">Nombre</label>
+          <div class="col-sm-10">
+          	<input id="name" type="text" class="form-control" value="{{userNombre2}}" name="name" placeholder="Nombre" required>
       </div>
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Autor</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{autor}}</div>
-      </div>
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Lsbn</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{lsbn}}</div>
-      </div>
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Estado</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{estado}}</div>
-      </div>
-      <div class="row">
-      <button type="button" class="btn btn-default btn-xs delete pull-right">&times;
-      </button>
-      <button type="button" class="btn btn-primary btn-xs update pull-right">update
-      </button>
-      </div>
-      </div>
-      {{/each}}
-    {{/if}}
-        {{#if  userListarLibros}}
-          {{#each libros}}  
-      <div class="libro">
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Nombre</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{name}}</div>
-      </div>
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Edad</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{edad}}</div>
-      </div>
-      <div class="row">
-        <label class="col-xs-4 col-sm-4 col-md-4">Codigo</label>
-        <div class="col-xs-8 col-sm-8 col-md-8">{{codigo}}</div>
-      </div>
-      <div class="row">
-      <button type="button" class="btn btn-default btn-xs delete pull-right">&times;
-      </button>
-      <button type="button" class="btn btn-primary btn-xs update pull-right">update
-      </button>
-      </div>
-      </div>
-      {{/each}}
-       {{/if}}
-    </form> 
+        </div>
+      <div class="form-group ">
+          <label for="search" class="col-sm-2 control-label">Edad</label>
+          <div class="col-sm-10">
+            <input id="edad" type="text" class="form-control" value="{{userEdad}}" name="edad" placeholder="edad" required>
+          </div>
+      </div>  
+      <div class="form-group ">
+          <label for="search" class="col-sm-2 control-label">Código</label>
+          <div class="col-sm-10">
+            <input id="codigo" type="text" class="form-control" value="{{userCodigo}}" name="codigo" placeholder="codigo" required>
+          </div>
+      </div>     
+        {{#if updateUser}}
+          <button type="submit" class="btn btn-primary">Update</button>
+        {{else}}
+          <button type="submit" class="btn btn-default">Submit</button>
+        {{/if}}
+    </form>
+
 </template>

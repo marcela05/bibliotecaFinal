@@ -1,115 +1,59 @@
 import { Template } from 'meteor/templating';
-import { Users } from '../api/collections.js';
 import { Libros } from '../api/collections.js';
-
 import './registroEstudiantes.html';
-import './registroLibros.js';
+import { ReactiveDict } from 'meteor/reactive-dict';
+const instance = Template.instance();
 
+Template.registroEstudiantes.onCreated(function registroEstudiantesOnCreated() {
+  this.state = new ReactiveDict();
 
- Template.registroEstudiantes.helpers({
-    userNombre: function(){
-        return Session.get('nombre');
+});
+  
+   Template.registroEstudiantes.helpers({
+    userNombre2: function(){
+        return instance.state.get('nombre2');
     },
 
-    userAno: function(){
-        return Session.get('ano');
+    userEdad: function(){
+        return instance.state.get('edad');
     },
 
-    userAutor: function(){
-        return Session.get('autor');
-    },
-    userLsbn: function(){
-        return Session.get('lsbn');
-    },
-    userEstado: function () {
-        return Session.get('estado');
-    },
-
+    userCodigo: function(){
+        return instance.state.get('codigo');
+    }
   });
+
 
  Template.registroEstudiantes.events({
 
-    'submit #form-a': function(event, template){
-        event.preventDefault();        
-        
+    'submit  #form-c' (event, instance){
+        event.preventDefault();         
         var name = event.target.name.value;
-        var ano = event.target.ano.value;
-        var lsbn = event.target.lsbn.value;
-        var autor = event.target.autor.value;
-        var estado = Session.get('estado');
-
-        if (estado === undefined) {
-            alert("Selecciona algún estado");
-        } else {
-            Session.set('name', name);
-            Session.set('ano', ano);
-            Session.set('lsbn', lsbn);
-            Session.set('autor', autor);
-            Session.set('estado', estado);
+        var edad = event.target.edad.value;
+        var codigo = event.target.codigo.value;
+        instance.state.set('nombre2', name);
+        instance.state.set('edad', edad);
+         instance.state.set('codigo', codigo);
             
-            var user = {
+            var libro = {
                 name: name,
-                ano: ano,
-                lsbn: lsbn,
-                autor: autor,
-                estado: estado
+                edad: edad,
+                codigo: codigo,
             };
-             Users.insert(user);
-            // var userId = Session.get('update');
-            // if (userId != undefined){
-            //     Users.update({_id: userId}, user);
-            // } else {
-               
-            //     console.log("Este es el libro: ", user);
+        var libroId = instance.state.get('update');
+            if (libroId != undefined){
+                Libros.update({_id: libroId}, libro);
+            } else {
+                Libros.insert(libro);
+                console.log("Este es el libro: ", libro);
 
-            // }
-
+            }
+        console.log("Este es el estudiante: ", libro);
             event.target.name.value = '';
-            event.target.autor.value = '';
-        }
+            event.target.edad.value = '';
     },
-
-    'change select': function(evt) {
-        evt.preventDefault();
-        var newValue = $(evt.target).val();
-
-        Session.set('estado', newValue);
-
-        console.log("El estado es: ", newValue);
-        if (newValue === 'Disponible') {
-            //alert('Es mujer');
-        } else {
-            
-        }        
-    },
-
-    'blur #comment': function(event) {
-        event.preventDefault();
-        var _comment = $('[name="comment"]').val();
-        console.log("blur comment", _comment);
-    },
-
-    'blur #name': function(event) {
-        event.preventDefault();
-        var _name = $('[name="name"]').val();
-        console.log("blur name", _name);
-    },
-
-    'keyup #comment': function () {
-        var text_max = 120;
-        var text_length = $('#comment').val().length;
-        var text_remaining = 120;
-        if (text_remaining > 0) {
-            text_remaining = text_max - text_length;
-            $('#comment_feedback').html(text_remaining + 
-                ' characters remaining...');        
-        } 
-    },
-
-    'submit #form-b': function(event, template){
-        event.preventDefault();
-        //var _name = event.target.fupInput.value
-        var _name = $('[name="fupInput"]').val();
-        console.log("submit b: ", _name);
-    }
-  });
+    });
+Template.registroEstudiantes.onCreated(function registroEstudiantesOnCreated() {
+  this.state = new ReactiveDict();
+  Meteor.subscribe('collections');
+});

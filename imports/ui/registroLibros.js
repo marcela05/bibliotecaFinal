@@ -1,58 +1,99 @@
 import { Template } from 'meteor/templating';
 import { Users } from '../api/collections.js';
 import { Libros } from '../api/collections.js';
-
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './registroLibros.html';
+import '../api/collections.js';
+const instance = Template.instance();
+
+Template.registroLibros.onCreated(function registroLibrosOnCreated() {
+  this.state = new ReactiveDict();
+
+});
   
   Template.registroLibros.helpers({
-    users: function () {
-        return Users.find().fetch();
-    },
-    libros: function () {
-        return Libros.find().fetch();
-    },
-    userListarLibros: function () {
-        return Session.get('listarLibro');
-    },
-    userListarEstudiantes: function () {
-        return Session.get('listarEstudiante');
-    },
-  });
-
-    Template.registroLibros.events({
-    'click .delete': function (){
-        Users.remove(this._id);
-        Libros.remove(this._id)
+    userNombre: function (){
+        return instance.state.get('name');
     },
 
-    'click .user': function (){
-        console.log("User: ", this);
-        Session.set('nombre', this.name);
-        Session.set('ano', this.ano);
-        Session.set('autor', this.autor);
-        Session.set('lsbn', this.lsbn);
-        Session.set('estado', this.estado);
-        Session.set('update', this._id);
+    userAno: function (){
+        return instance.state.get('ano');
     },
-    'click .libro': function (){
-        console.log("Libro: ", this);
-        Session.set('nombre2', this.name);
-        Session.set('edad', this.edad);
-        Session.set('codigo', this.codigo);
-        Session.set('update2', this._id);
+
+    userAutor: function (){
+        return  instance.state.get('autor');
     },
-    'click .listarLibro': function(event, template){
-        event.preventDefault();
-            Session.set('listarLibro', true);
-            Session.set('listarEstudiante', false);
-            console.log("submit lib bbbbbbb: ", Session.get('listarLibro'));
+    userLsbn: function (){
+        return  instance.state.get('lsbn');
     },
-    'click .listarEstudiante': function(event, template){
-        event.preventDefault();
-       Session.set('listarLibro', false);
-        Session.set('listarEstudiante', true);
-        console.log("submit est bbbbbbb: ", 2);
+    userEstado: function () {
+        return  instance.state.get('estado');
     },
 
   });
+  Template.registroLibros.events({
+    'submit  #form-a' (event, instance) {
+        event.preventDefault();             
+
+        if (estado === undefined) {
+            alert("Selecciona algún estado");
+        } else {
+            instance.state.set('name',  event.target.name.value);
+            instance.state.set('ano', event.target.ano.value);
+            instance.state.set('isbn',event.target.lsbn.value);
+            instance.state.set('autor',event.target.autor.value);
+            const name1=   instance.state.get('name');
+            const ano1=    instance.state.get('ano');
+            const isbn1=   instance.state.get('isbn');
+            const autor1=  instance.state.get('autor');
+            console.log("-name",instance.state.get('name'));
+            console.log("-ano",instance.state.get('ano'));
+            console.log("-estado",instance.state.get('estado'));
+            // var libro = {
+            //     name: name1,
+            //     ano: ano1,
+            //     isbn: isbn1,
+            //     autor: autor1
+            // };
+            // Users.insert(libro);
+            // Users.insert(function (name, ano, isbn, autor) {
+            //    name= name1,
+            //     ano=ano1,
+            //     isbn=isbn1,
+            //     autor=autor1
+            // });
+           // 
+            Meteor.call('libros.insert', name1, ano1, isbn1, autor1);
+            //     instance.state.get('name'),
+            //     instance.state.get('ano'),
+            //     instance.state.get('lsbn'),
+            //     instance.state.get('autor'),
+            //     instance.state.get('estado'));
+            event.target.name.value = '';
+            event.target.autor.value = '';
+        }
+    },
+
+    'change select' (event, instance) {
+        event.preventDefault();
+        instance.state.set('estado',  $(event.target).val());       
+    },
+
+    'blur #comment': function(event) {
+        event.preventDefault();
+        var _comment = $('[name="comment"]').val();
+        console.log("blur comment", _comment);
+    },
+
+    'blur #name': function(event) {
+        event.preventDefault();
+        var _name = $('[name="name"]').val();
+        console.log("blur name", _name);
+    },
+
+  });
+Template.registroLibros.onCreated(function registroLibrosOnCreated() {
+  this.state = new ReactiveDict();
+  Meteor.subscribe('collections');
+});
