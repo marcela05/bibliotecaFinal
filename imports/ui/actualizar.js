@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
-import { Users } from '../api/collections.js';
-import { Libros } from '../api/collections.js';
+import { Users } from '../api/estudiantes.js';
+import { Libros } from '../api/libros.js';
 
 import './actualizar.html';
 

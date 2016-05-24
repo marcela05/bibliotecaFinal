@@ -1,10 +1,10 @@
 import { Template } from 'meteor/templating';
-import { Users } from '../api/collections.js';
-import { Libros } from '../api/collections.js';
+//import { Users } from '../api/collections.js';
+import { Libros } from '../api/libros.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './registroLibros.html';
-import '../api/collections.js';
+//import '../api/collections.js';
 const instance = Template.instance();
 
 Template.registroLibros.onCreated(function registroLibrosOnCreated() {
@@ -41,14 +41,20 @@ Template.registroLibros.onCreated(function registroLibrosOnCreated() {
         } else {
             instance.state.set('name',  event.target.name.value);
             instance.state.set('ano', event.target.ano.value);
-            instance.state.set('isbn',event.target.lsbn.value);
+            instance.state.set('lsbn',event.target.lsbn.value);
             instance.state.set('autor',event.target.autor.value);
+            instance.state.set('estado',event.target.estado.value);
+            
             const name1=   instance.state.get('name');
             const ano1=    instance.state.get('ano');
-            const isbn1=   instance.state.get('isbn');
+            const isbn1=   instance.state.get('lsbn');
             const autor1=  instance.state.get('autor');
+            const estado1= instance.state.get('estado');
+
             console.log("-name",instance.state.get('name'));
             console.log("-ano",instance.state.get('ano'));
+            console.log("-autor",instance.state.get('autor'));
+            console.log("-isbn",instance.state.get('lsbn'));
             console.log("-estado",instance.state.get('estado'));
             // var libro = {
             //     name: name1,
@@ -63,14 +69,16 @@ Template.registroLibros.onCreated(function registroLibrosOnCreated() {
             //     isbn=isbn1,
             //     autor=autor1
             // });
-           // 
-            Meteor.call('libros.insert', name1, ano1, isbn1, autor1);
+           // nombre, ano, autor, isbn, estado
+            Meteor.call('libros.insert', name1, ano1, autor1, isbn1, estado1);
             //     instance.state.get('name'),
             //     instance.state.get('ano'),
             //     instance.state.get('lsbn'),
             //     instance.state.get('autor'),
             //     instance.state.get('estado'));
             event.target.name.value = '';
+            event.target.ano.value ='';
+            event.target.lsbn.value ='';
             event.target.autor.value = '';
         }
     },
@@ -95,5 +103,5 @@ Template.registroLibros.onCreated(function registroLibrosOnCreated() {
   });
 Template.registroLibros.onCreated(function registroLibrosOnCreated() {
   this.state = new ReactiveDict();
-  Meteor.subscribe('collections');
+  Meteor.subscribe('libros');
 });

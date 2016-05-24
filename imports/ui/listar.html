@@ -2,8 +2,8 @@
   <form id="form-b" name ="formb" class="form-horizontal">
    <input type="submit" value="Listar-Estudiantes" class= "listarLibro" id="listarLibro" name="listarLibro"/>
    <input type="submit" value="Listar-Libros" class= "listarEstudiante" id="listarEstudiante" name="listarEstudiante"/>       
-        {{#if  userListarEstudiantes}}
-            {{#each users}} 
+        {{#if  userListarLibros}}
+            {{#each libros}} 
       <div class="user">
       <div class="row">
         <label class="col-xs-4 col-sm-4 col-md-4">Nombre</label>
@@ -34,8 +34,8 @@
       </div>
       {{/each}}
     {{/if}}
-        {{#if  userListarLibros}}
-          {{#each libros}}  
+        {{#if  userListarEstudiantes}}
+          {{#each users}}  
       <div class="libro">
       <div class="row">
         <label class="col-xs-4 col-sm-4 col-md-4">Nombre</label>

@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { Libros } from '../api/collections.js';
+import { Users } from '../api/estudiantes.js';
 import './registroEstudiantes.html';
 import { ReactiveDict } from 'meteor/reactive-dict';
 const instance = Template.instance();
@@ -33,27 +33,29 @@ Template.registroEstudiantes.onCreated(function registroEstudiantesOnCreated() {
         var codigo = event.target.codigo.value;
         instance.state.set('nombre2', name);
         instance.state.set('edad', edad);
-         instance.state.set('codigo', codigo);
+        instance.state.set('codigo', codigo);
             
-            var libro = {
+            
+            var estudiante = {
                 name: name,
                 edad: edad,
                 codigo: codigo,
             };
-        var libroId = instance.state.get('update');
-            if (libroId != undefined){
-                Libros.update({_id: libroId}, libro);
-            } else {
-                Libros.insert(libro);
-                console.log("Este es el libro: ", libro);
+             var estudianteId = instance.state.get('update');
+            if (estudianteId != undefined){
+                Users.update({_id: estudianteId}, estudiante);
+            } else {                
+                Users.insert(estudiante);                
+                console.log("Este es el estudiante: ", estudiante);
 
             }
-        console.log("Este es el estudiante: ", libro);
+            //console.log("Este es el estudiante: ", estudiante);
             event.target.name.value = '';
             event.target.edad.value = '';
+            event.target.codigo.value = '';
     },
     });
 Template.registroEstudiantes.onCreated(function registroEstudiantesOnCreated() {
   this.state = new ReactiveDict();
-  Meteor.subscribe('collections');
+  Meteor.subscribe('estudiantes');
 });
